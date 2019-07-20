@@ -1,0 +1,9 @@
+<div class="container">
+<input type="number" #sizeInput min="1" max="50" step="1" placeholder="type a number">
+<button (click)="setSize(sizeInput.value)">Add</button>
+<app-actions></app-actions>
+<app-grid [size]="sizeInput.value"></app-grid>
+</div>
+
+
+

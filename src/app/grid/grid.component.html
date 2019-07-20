@@ -1,0 +1,12 @@
+<div class="grid" *ngIf="+size">
+<app-point></app-point>
+<table>
+   <tr *ngFor="let row of toArray(size)">
+    <td *ngFor="let col of toArray(size)">
+    </td>
+  </tr>
+</table>
+<br/>
+<button type="button" (click)="play()" class="playButton">Play</button>
+</div>
+
