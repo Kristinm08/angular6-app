@@ -7,19 +7,20 @@ import { PointComponent } from '../point/point.component';
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.css']
 })
-export class GridComponent implements OnInit {
+export class GridComponent implements OnInit, OnDestroy {
   @Input() size: number;
-  readonly gridSize: number = 400;
+  readonly gridSize = 400;
   @ViewChild(PointComponent) pointChild;
+  subsciption: Subsciption[];
 
   constructor(private _actionsService: ActionsService) {
   }
 
   ngOnInit() {
-    this._actionsService.playMethodCalled$.subscribe(
+    this.subsciption.push(this._actionsService.playMethodCalled$.subscribe(
       () => {
         this.reset();
-      });
+      }));
   }
 
   toArray(n: number) {
@@ -38,7 +39,7 @@ export class GridComponent implements OnInit {
   }
 
   getRequest() {
-    this._actionsService.httpRequest().subscribe();
+    this.subsciption.push(this._actionsService.httpRequest().subscribe());
   }
 
   reset() {
@@ -48,12 +49,12 @@ export class GridComponent implements OnInit {
 
   calculateCoordinates() {
     let actionsList: Array<any> = [];
-    let x: number = 0;
-    let y: number = 0;
+    let x = 0;
+    let y = 0;
 
     const step: number = Math.floor(this.gridSize / this.size);
 
-    this._actionsService.actionsList.forEach((i) => {
+    this._actionsService.actionsList.forEach(i => {
       switch (i) {
         case 37:
           x += -step;
@@ -77,5 +78,9 @@ export class GridComponent implements OnInit {
 
   inRange(x): boolean {
     return x >= 0 && x <= this.gridSize;
+  }
+  
+  ngOnDestroy():void{
+    this.subscrition.forEach(i => i.unsubscribe());
   }
 }
