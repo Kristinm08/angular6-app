@@ -13,8 +13,7 @@ export class ActionsComponent implements OnInit {
   ngOnInit() { }
 
   isArrowKeys(event: KeyboardEvent) {
-    let k: number = event.keyCode;
-    if (k) {
+    if (event.keyCode) {
       event.preventDefault();
     }
   }
